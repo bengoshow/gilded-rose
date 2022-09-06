@@ -25,6 +25,12 @@ describe('`updateQuality`', () => {
     expect(standardItem.quality).toBe(9);
   });
 
+  it('increases the quality by one for Backstage Passes', () => {
+    const item = new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20);
+    updateQuality([item]);
+    expect(item.quality).toBe(21);
+  });
+
   it('with less than 11 days to sell, increases the quality by two for Backstage Passes', () => {
     const item = new Item('Backstage passes to a TAFKAL80ETC concert', 10, 20);
     updateQuality([item]);
@@ -47,5 +53,11 @@ describe('`updateQuality`', () => {
     const item = new Item('Conjured Mana Cake', -1, 20);
     updateQuality([item]);
     expect(item.quality).toBe(18);
+  });
+
+  it('Sulfuras, Hand of Ragnaros does not decrease in quality', () => {
+    const item = new Item('Sulfuras, Hand of Ragnaros', 0, 80);
+    updateQuality([item]);
+    expect(item.quality).toBe(80);
   });
 });

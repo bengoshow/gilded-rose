@@ -21,40 +21,49 @@ const items = [
 
 updateQuality(items);
 */
+const specialItems = [
+  'Aged Brie',
+  'Sulfuras, Hand of Ragnaros',
+  'Backstage passes to a TAFKAL80ETC concert',
+];
 export function updateQuality(items) {
   for (var i = 0; i < items.length; i++) {
-    if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-      if (items[i].quality > 0 && items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        items[i].quality = items[i].quality - 1
-      }
-    } else {
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
-        if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-          if (items[i].sell_in < 11 && items[i].quality < 50) {
-            items[i].quality = items[i].quality + 1
-          }
-          if (items[i].sell_in < 6 && items[i].quality < 50) {
-            items[i].quality = items[i].quality + 1
-          }
-        }
-      }
-    }
+
     if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
       items[i].sell_in = items[i].sell_in - 1;
     }
-    if (items[i].sell_in < 0) {
-      if (items[i].name != 'Aged Brie') {
-        if (items[i].name != 'Backstage passes to a TAFKAL80ETC concert' && items[i].quality > 0 && items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          items[i].quality = items[i].quality - 1
-        } else {
-          items[i].quality = items[i].quality - items[i].quality
-        }
-      } else {
-        if (items[i].quality < 50) {
-          items[i].quality = items[i].quality + 1
-        }
+
+    if (!specialItems.includes(items[i].name) && items[i].quality > 0) {
+      if (items[i].sell_in < 0) {
+        items[i].quality = items[i].quality - 1;
       }
+      items[i].quality = items[i].quality - 1;
+      return;
+    }
+
+    if (items[i].name == 'Aged Brie') {
+      if (items[i].sell_in < 0) {
+        items[i].quality = items[i].quality + 1;
+      }
+      items[i].quality = items[i].quality + 1;
+      return;
+    }
+
+    if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert' && items[i].quality < 50) {
+      if (items[i].sell_in < 0) {
+        items[i].quality = 0;
+        return;
+      }
+      if (items[i].sell_in < 6) {
+        items[i].quality = items[i].quality + 3;
+        return;
+      }
+      if (items[i].sell_in < 11) {
+        items[i].quality = items[i].quality + 2;
+        return;
+      }
+      items[i].quality = items[i].quality + 1;
+      return;
     }
   }
 }
