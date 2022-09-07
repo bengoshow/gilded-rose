@@ -38,7 +38,6 @@ export function updateQuality(items) {
         items[i].quality = items[i].quality - 1;
       }
       items[i].quality = items[i].quality - 1;
-      return;
     }
 
     if (items[i].name == 'Aged Brie') {
@@ -46,24 +45,19 @@ export function updateQuality(items) {
         items[i].quality = items[i].quality + 1;
       }
       items[i].quality = items[i].quality + 1;
-      return;
     }
 
     if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert' && items[i].quality < 50) {
-      if (items[i].sell_in < 0) {
-        items[i].quality = 0;
-        return;
+      items[i].quality = items[i].quality + 1;
+      if (items[i].sell_in < 11) {
+        items[i].quality = items[i].quality + 1;
       }
       if (items[i].sell_in < 6) {
-        items[i].quality = items[i].quality + 3;
-        return;
+        items[i].quality = items[i].quality + 1;
       }
-      if (items[i].sell_in < 11) {
-        items[i].quality = items[i].quality + 2;
-        return;
+      if (items[i].sell_in < 0) {
+        items[i].quality = 0;
       }
-      items[i].quality = items[i].quality + 1;
-      return;
     }
   }
 }
